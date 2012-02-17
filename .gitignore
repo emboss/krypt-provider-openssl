@@ -1,0 +1,13 @@
+.bundle
+mkmf.log
+extconf.h
+Makefile
+tmp
+*.swp
+*.swo
+*~
+*.so
+*.o
+.rbx/
+.idea/
+nbproject

@@ -1,0 +1,11 @@
+== krypt-provider-openssl
+
+Implementation of the krypt-provider API using OpenSSL.
+
+== krypt
+
+For more information about krypt, please have a
+look at the project and its wiki at
+
+https://github.com/emboss/krypt
+
