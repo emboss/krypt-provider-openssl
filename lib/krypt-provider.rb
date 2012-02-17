@@ -2,7 +2,7 @@
 
 = Info
 
-krypt-core API - C version
+krypt-provider API - OpenSSL
 
 Copyright (C) 2011
 Hiroshi Nakamura <nahi@ruby-lang.org>
