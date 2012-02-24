@@ -1,6 +1,6 @@
 == krypt-provider-openssl
 
-Implementation of the krypt-provider API using OpenSSL.
+C implementation of the krypt-provider API using OpenSSL.
 
 == krypt
 
