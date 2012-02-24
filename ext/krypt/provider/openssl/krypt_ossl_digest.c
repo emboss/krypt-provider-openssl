@@ -50,7 +50,7 @@ krypt_interface_md krypt_interface_md_ossl = {
 static krypt_md_ossl *
 int_md_alloc(void)
 {
-    krypt_md_ossl *md = ALLOC(krypt_md_ossl);
+    krypt_md_ossl *md = (krypt_md_ossl *)malloc(sizeof(krypt_md_ossl));
     memset(md, 0, sizeof(krypt_md_ossl));
     md->provider = &krypt_provider_ossl;
     md->methods = &krypt_interface_md_ossl;
@@ -126,7 +126,7 @@ int_md_final(krypt_md *ext, unsigned char ** digest, size_t *len)
 
     int_safe_cast(md, ext);
     ret_len = EVP_MD_CTX_size(md->ctx);
-    ret = ALLOC_N(unsigned char, ret_len);
+    ret = (unsigned char *) malloc(ret_len);
     EVP_DigestFinal_ex(md->ctx, ret, NULL);
 
     *digest = ret;
@@ -181,6 +181,6 @@ int_md_free(krypt_md *ext)
     md = (krypt_md_ossl *) ext;
     if (md->ctx)
 	EVP_MD_CTX_destroy(md->ctx);
-    xfree(md);
+    free(md);
 }
 
