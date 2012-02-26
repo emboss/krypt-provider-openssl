@@ -50,7 +50,7 @@ krypt_interface_md krypt_interface_md_ossl = {
 static krypt_md_ossl *
 int_md_alloc(void)
 {
-    krypt_md_ossl *md = (krypt_md_ossl *)malloc(sizeof(krypt_md_ossl));
+    krypt_md_ossl *md = (krypt_md_ossl *) malloc(sizeof(krypt_md_ossl));
     memset(md, 0, sizeof(krypt_md_ossl));
     md->provider = &krypt_provider_ossl;
     md->methods = &krypt_interface_md_ossl;
