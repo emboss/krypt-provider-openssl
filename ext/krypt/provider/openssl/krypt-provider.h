@@ -53,6 +53,8 @@ struct krypt_provider_st {
 
 krypt_provider *krypt_provider_get_default(void);
 
+extern void krypt_error_add(const char * format, ...);
+
 #if defined(__cplusplus)
 }
 #endif
