@@ -3,7 +3,7 @@ Gem::Specification.new do |s|
   s.version = '0.0.1'
   s.author = 'Hiroshi Nakamura, Martin Bosslet'
   s.email = 'Martin.Bosslet@googlemail.com'
-  s.homepage = 'https://github.com/emboss/krypt-provider-openssl'
+  s.homepage = 'https://github.com/krypt/krypt-provider-openssl'
   s.summary = 'Implementation of the krypt-provider API using OpenSSL'
   s.extensions << 'ext/krypt/provider/openssl/extconf.rb'
   s.files = %w(LICENSE) + Dir.glob('{ext,lib}/**/*')
