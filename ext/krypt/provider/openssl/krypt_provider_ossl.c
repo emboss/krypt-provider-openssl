@@ -19,12 +19,6 @@ krypt_provider krypt_provider_ossl = {
     krypt_ossl_md_new_name
 };
 
-krypt_provider *
-krypt_provider_get_default(void)
-{
-    return &krypt_provider_ossl;
-}
-
 void
 Init_kryptprovideropenssl(void)
 {
@@ -32,4 +26,6 @@ Init_kryptprovideropenssl(void)
     OpenSSL_add_all_algorithms();
     ERR_load_crypto_strings();
     SSL_load_error_strings();
+
+    krypt_provider_register(&krypt_provider_ossl);
 }

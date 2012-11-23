@@ -1,5 +1,5 @@
 /*
-* krypt-provider API - OpenSSL version
+* krypt-core API - C version
 *
 * Copyright (C) 2011
 * Hiroshi Nakamura <nahi@ruby-lang.org>
@@ -13,12 +13,14 @@
 #ifndef _KRYPT_PROVIDER_H_
 #define _KRYPT_PROVIDER_H_
 
-#if defined(__cplusplus)
-extern "C" {
+
+#ifndef _RSTRING_NOT_MODIFIED
+#define RSTRING_NOT_MODIFIED 1
 #endif
 
-#define RSTRING_NOT_MODIFIED 1
+#ifndef RUBY_READONLY_STRING
 #define RUBY_READONLY_STRING 1
+#endif
 
 #include <ruby.h>
 
@@ -51,12 +53,10 @@ struct krypt_provider_st {
     krypt_md *(*md_new_name)(krypt_provider *provider, const char *name);
 };
 
-krypt_provider *krypt_provider_get_default(void);
-
+/* Can be called from within a provider implementation to indicate errors */
 extern void krypt_error_add(const char * format, ...);
 
-#if defined(__cplusplus)
-}
-#endif
+/* May be used to register a singleton provider upon initialization */
+extern void krypt_provider_register(krypt_provider *provider);
 
 #endif /* _KRYPT_PROVIDER_H_ */
