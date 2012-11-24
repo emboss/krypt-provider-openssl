@@ -26,11 +26,11 @@ do {								\
 } while (0)
 
 int int_md_reset(krypt_md *md);
-int int_md_update(krypt_md *md, unsigned char *data, size_t len);
-int int_md_final(krypt_md *md, unsigned char ** digest, size_t *len);
-int int_md_digest(krypt_md *md, unsigned char *data, size_t len, unsigned char **digest, size_t *digest_len);
-int int_md_digest_length(krypt_md *md, int *len);
-int int_md_block_length(krypt_md *md, int *len);
+int int_md_update(krypt_md *md, const void *data, size_t len);
+int int_md_final(krypt_md *md, uint8_t ** digest, size_t *len);
+int int_md_digest(krypt_md *md, const uint8_t *data, size_t len, uint8_t **digest, size_t *digest_len);
+int int_md_digest_length(krypt_md *md, size_t *len);
+int int_md_block_length(krypt_md *md, size_t *len);
 int int_md_name(krypt_md *md, const char **name);
 void int_md_mark(krypt_md *md);
 void int_md_free(krypt_md *md);
@@ -108,7 +108,7 @@ int_md_reset(krypt_md *ext)
 }
 
 int
-int_md_update(krypt_md *ext, unsigned char *data, size_t len)
+int_md_update(krypt_md *ext, const void *data, size_t len)
 {
     krypt_md_ossl *md;
 
@@ -118,16 +118,16 @@ int_md_update(krypt_md *ext, unsigned char *data, size_t len)
 }
 
 int
-int_md_final(krypt_md *ext, unsigned char ** digest, size_t *len)
+int_md_final(krypt_md *ext, uint8_t ** digest, size_t *len)
 {
     krypt_md_ossl *md;
-    unsigned char *ret;
+    uint8_t *ret;
     size_t ret_len;
 
     int_safe_cast(md, ext);
     ret_len = EVP_MD_CTX_size(md->ctx);
-    ret = (unsigned char *) malloc(ret_len);
-    EVP_DigestFinal_ex(md->ctx, ret, NULL);
+    ret = (uint8_t *) malloc(ret_len);
+    EVP_DigestFinal_ex(md->ctx, (unsigned char *)ret, NULL);
 
     *digest = ret;
     *len = ret_len;
@@ -135,14 +135,14 @@ int_md_final(krypt_md *ext, unsigned char ** digest, size_t *len)
 }
 
 int
-int_md_digest(krypt_md *ext, unsigned char *data, size_t len, unsigned char **digest, size_t *digest_len)
+int_md_digest(krypt_md *ext, const uint8_t *data, size_t len, uint8_t **digest, size_t *digest_len)
 {
     if (!int_md_update(ext, data, len)) return 0;
     return int_md_final(ext, digest, digest_len);
 }
 
 int
-int_md_digest_length(krypt_md *ext, int *len)
+int_md_digest_length(krypt_md *ext, size_t *len)
 {
     krypt_md_ossl *md;
 
@@ -152,7 +152,7 @@ int_md_digest_length(krypt_md *ext, int *len)
 }
 
 int
-int_md_block_length(krypt_md *ext, int *len)
+int_md_block_length(krypt_md *ext, size_t *len)
 {
     krypt_md_ossl *md;
 
