@@ -14,7 +14,7 @@
 #include "krypt-provider-ossl.h"
 
 krypt_provider krypt_provider_ossl = {
-    "Krypt OpenSSL Provider",
+    "openssl",
     krypt_ossl_md_new_oid,
     krypt_ossl_md_new_name
 };

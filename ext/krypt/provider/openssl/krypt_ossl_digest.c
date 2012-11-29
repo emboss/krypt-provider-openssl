@@ -19,10 +19,10 @@ typedef struct krypt_md_ossl_st {
     EVP_MD_CTX *ctx;
 } krypt_md_ossl;
 
-#define int_safe_cast(dest, md)					\
-do {								\
-    if ((md)->provider != &krypt_provider_ossl) return 0;	\
-    (dest) = (krypt_md_ossl *) (md);				\
+#define int_safe_cast(dest, md)						\
+do {									\
+    if ((md)->provider != &krypt_provider_ossl) return KRYPT_ERR;	\
+    (dest) = (krypt_md_ossl *) (md);					\
 } while (0)
 
 int int_md_reset(krypt_md *md);
@@ -103,8 +103,8 @@ int_md_reset(krypt_md *ext)
 
     int_safe_cast(md, ext);
     if (EVP_DigestInit_ex(md->ctx, EVP_MD_CTX_md(md->ctx), NULL) != 1)
-	return 0;
-    return 1;
+	return KRYPT_ERR;
+    return KRYPT_OK;
 }
 
 int
@@ -114,7 +114,7 @@ int_md_update(krypt_md *ext, const void *data, size_t len)
 
     int_safe_cast(md, ext);
     EVP_DigestUpdate(md->ctx, data, len);
-    return 1;
+    return KRYPT_OK;
 }
 
 int
@@ -131,13 +131,13 @@ int_md_final(krypt_md *ext, uint8_t ** digest, size_t *len)
 
     *digest = ret;
     *len = ret_len;
-    return 1;
+    return KRYPT_OK;
 }
 
 int
 int_md_digest(krypt_md *ext, const uint8_t *data, size_t len, uint8_t **digest, size_t *digest_len)
 {
-    if (!int_md_update(ext, data, len)) return 0;
+    if (!int_md_update(ext, data, len)) return KRYPT_ERR;
     return int_md_final(ext, digest, digest_len);
 }
 
@@ -148,7 +148,7 @@ int_md_digest_length(krypt_md *ext, size_t *len)
 
     int_safe_cast(md, ext);
     *len = EVP_MD_CTX_size(md->ctx);
-    return 1;
+    return KRYPT_OK;
 }
 
 int
@@ -158,7 +158,7 @@ int_md_block_length(krypt_md *ext, size_t *len)
 
     int_safe_cast(md, ext);
     *len = EVP_MD_CTX_block_size(md->ctx);
-    return 1;
+    return KRYPT_OK;
 }
 
 int
@@ -168,7 +168,7 @@ int_md_name(krypt_md *ext, const char **name)
 
     int_safe_cast(md, ext);
     *name = EVP_MD_name(EVP_MD_CTX_md(md->ctx));
-    return 1;
+    return KRYPT_OK;
 }
 
 void
