@@ -8,4 +8,5 @@ Gem::Specification.new do |s|
   s.extensions << 'ext/krypt/provider/openssl/extconf.rb'
   s.files = %w(LICENSE) + Dir.glob('{ext,lib}/**/*')
   s.require_path = "lib"
+  s.license = 'MIT'
 end
