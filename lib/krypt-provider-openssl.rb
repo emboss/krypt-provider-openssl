@@ -44,6 +44,7 @@ module Krypt
       module Handle
         extend ::FFI::Library
   
+        # We cannot require the C extension in JRuby by default
         if RUBY_PLATFORM =~ /java/
           ffi_lib File.expand_path('kryptprovideropenssl.so', File.dirname(__FILE__))
         else
