@@ -49,9 +49,12 @@ extern "C" {
 #include <openssl/ssl.h>
 
 extern krypt_provider krypt_provider_ossl;
+krypt_provider *krypt_ossl_provider_get(void);
 
-krypt_md * krypt_ossl_md_new_oid(krypt_provider *provider, const char *oid);
-krypt_md * krypt_ossl_md_new_name(krypt_provider *provider, const char *name);
+void krypt_ossl_init(krypt_provider *provider, void *args);
+void krypt_ossl_finalize(krypt_provider *provider);
+krypt_md *krypt_ossl_md_new_oid(krypt_provider *provider, const char *oid);
+krypt_md *krypt_ossl_md_new_name(krypt_provider *provider, const char *name);
 
 #if defined(__cplusplus)
 }

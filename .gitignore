@@ -5,6 +5,7 @@ Makefile
 tmp
 *.swp
 *.swo
+*.gem
 *~
 *.so
 *.o

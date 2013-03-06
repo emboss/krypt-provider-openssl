@@ -30,5 +30,31 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 =end
 
-require 'kryptprovideropenssl.so'
+require 'ffi'
+
+module Krypt
+  module Provider
+
+    class OpenSSL < Krypt::FFI::Provider
+
+      def initialize
+        super(Handle.krypt_ossl_get_provider)
+      end
+
+      module Handle
+        extend ::FFI::Library
+  
+        if RUBY_PLATFORM =~ /java/
+          ffi_lib File.expand_path('kryptprovideropenssl.so', File.dirname(__FILE__))
+        else
+          require 'kryptprovideropenssl.so'
+          ffi_lib ::FFI::CURRENT_PROCESS
+        end
+
+        attach_function :krypt_ossl_get_provider, [], :pointer
+      end
+    end
+
+  end
+end
 

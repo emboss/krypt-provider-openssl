@@ -31,17 +31,35 @@
 
 krypt_provider krypt_provider_ossl = {
     "openssl",
+    krypt_ossl_init,
+    krypt_ossl_finalize,
     krypt_ossl_md_new_oid,
     krypt_ossl_md_new_name
 };
 
+krypt_provider *
+krypt_ossl_get_provider(void) {
+    return &krypt_provider_ossl;
+}
+
 void
-Init_kryptprovideropenssl(void)
+krypt_ossl_init(krypt_provider *provider, void *args)
 {
     OpenSSL_add_ssl_algorithms();
     OpenSSL_add_all_algorithms();
     ERR_load_crypto_strings();
     SSL_load_error_strings();
-
-    krypt_provider_register(&krypt_provider_ossl);
 }
+
+void
+krypt_ossl_finalize(krypt_provider *provider)
+{
+    /* do nothing */
+}
+
+void
+Init_kryptprovideropenssl(void)
+{
+    /* do nothing */
+}
+
