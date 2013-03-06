@@ -46,9 +46,9 @@ module Krypt
   
         # We cannot require the C extension in JRuby by default
         if RUBY_PLATFORM =~ /java/
-          ffi_lib File.expand_path('kryptprovideropenssl.so', File.dirname(__FILE__))
+          ffi_lib File.expand_path('../../kryptprovideropenssl.so', File.dirname(__FILE__))
         else
-          require 'kryptprovideropenssl.so'
+          require'kryptprovideropenssl.so'
           ffi_lib ::FFI::CURRENT_PROCESS
         end
 
